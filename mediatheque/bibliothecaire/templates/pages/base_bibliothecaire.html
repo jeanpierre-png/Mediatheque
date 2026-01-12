@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque - Espace bibliothécaire</title>
+</head>
+<body>
+<h1>Médiathèque - Espace bibliothécaire</h1>
+
+<ul>
+    <li><a href="{%url 'member_list' %}" >Afficher la liste des membres</a></li>
+    <br>
+    <li><a href="{%url 'media_list' %}" >Afficher la liste des medias</a></li>
+    <br>
+    <li><a href="{%url 'loan_list' %}" >Emprunts en cours</a></li>
+</ul>
+
+<a href="{% url 'home' %}">⬅ Retour accueil</a>
+
+</body>
+</html>

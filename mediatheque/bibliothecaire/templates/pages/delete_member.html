@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Supprier le membre</title>
+</head>
+
+<body>
+
+<p>Confirmer la suppression de : <strong>{{ member.firstname }} {{ member.lastname }}</strong></p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Oui, supprimer</button>
+</form>
+
+<br>
+
+<a href="{% url 'member_list' %}">Annuler</a>
+
+</body>
+</html>

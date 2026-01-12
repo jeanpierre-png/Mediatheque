@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un emprunt</title>
+</head>
+<body>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<p><strong>Média : </strong>{{ media.title }}</p>
+
+<p>Nombre de membres : {{ members|length }}</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label for="member_id">Membre emprunteur :</label>
+    <select name="member_id" id="member_id" required>
+        {% for member in members %}
+            <option value="{{ member.id }}">
+                {{ member.firstname }} {{ member.lastname }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br>
+
+    <button type="submit">Créer l'emprunt</button>
+
+</form>
+
+<a href="{% url 'media_list' %}">Retour aux médias</a>
+
+</body>
+</html>

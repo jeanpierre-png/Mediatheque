@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Emprunts en cours</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Média</th>
+        <th>Membre</th>
+        <th>Date d'emprunt</th>
+        <th>Retour prévu</th>
+        <th>État</th>
+        <th>Action</th>
+    </tr>
+
+    {% for loan in loans %}
+
+    <tr>
+        <td>{{ loan.media.title }}</td>
+        <td>{{ loan.member.firstname }} {{ loan.member.lastname}}</td>
+        <td>{{ loan.loan_date }}</td>
+        <td>{{ loan.due_date }}</td>
+
+         <td>
+             <a href="">Rendre</a>
+         </td>
+    </tr>
+
+    {% empty %}
+    <tr>
+        <td>Acun emprunt en cours</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<br>
+
+<a href="{% url 'bibliothecaire_home' %}">⬅ Retour espace bibliothécaire</a>
+
+</body>
+</html>
