@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des médias</title>
+</head>
+
+<body>
+
+<p>
+    <a href="{% url 'add_media' %}">Ajouter un média</a>
+</p>
+
+<ul>
+    {% for media in medias %}
+        <li>
+            <strong>{{ media.title }}</strong>
+            -
+            {% if media.available and not media.consultation_only %}
+                <a href="{% url 'create_loan' media.id %}">Emprunter</a>
+            {% elif media.consultation_only %}
+                <em>Consultation uniquement</em>
+            {% endif %}
+
+            | <a href="{% url 'edit_media' media.id %}">Modifier</a>
+            | <a href="{% url 'delete_media' media.id %}">Supprimer</a>
+        </li>
+    <br>
+    {% empty %}
+        <li>Aucun média</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'bibliothecaire_home' %}">⬅ Retour espace bibliothécaire</a>
+
+</body>
+</html>

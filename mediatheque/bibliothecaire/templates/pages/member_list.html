@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque - Liste des membres</title>
+</head>
+<body>
+
+<h1>Liste des membres</h1>
+
+<a href="{% url 'create_member' %}">Créer un membre</a>
+
+<ul>
+    {% for m in members %}
+        <li>
+            {{ m.firstname }} {{ m.lastname }}
+            - <a href="{% url 'edit_member' m.id %}">Modifier</a>
+            -<a href="{% url 'delete_member' m.id %}">Supprimer</a>
+        </li>
+
+    <br>
+
+    {% empty %}
+        <li>Acun membre</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'bibliothecaire_home' %}">⬅ Retour espace bibliothécaire</a>
+
+</body>
+</html>

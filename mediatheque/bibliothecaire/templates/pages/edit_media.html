@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier le média </title>
+</head>
+<body>
+
+<p><strong>Media :</strong> {{ media.title }}</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </p>
+
+    <p>
+        {{ form.media_type.label_tag }}
+        {{ form.media_type }}
+    </p>
+
+     <div id="field-author">
+        {{ form.author.label_tag }}
+        {{ form.author }}
+    </div>
+    <div id="field-artist">
+        {{ form.artist.label_tag }}
+        {{ form.artist }}
+    </div>
+    <div id="field-realisator">
+        {{ form.realisator.label_tag }}
+        {{ form.realisator }}
+    </div>
+    <div id="field-creator">
+        {{ form.creator.label_tag }}
+        {{ form.creator }}
+    </div>
+
+</form>
+<br>
+<a href="{% url 'media_list' %}">Retour à la liste</a>
+
+</body>
+</html>

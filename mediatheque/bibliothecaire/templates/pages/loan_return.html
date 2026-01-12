@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Retour d'emprunt</title>
+</head>
+<body>
+
+<p>Confirmer le retour de ce média ?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmer le retour</button>
+</form>
+
+</body>
+</html>

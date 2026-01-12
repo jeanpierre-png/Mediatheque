@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un emprunt</title>
+</head>
+<body>
+
+<p>Média : <strong>{{ media.title }}</strong></p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Membre :</label>
+    <select name="membre">
+        {% for member in members %}
+            <option value="{{ member.id }}">
+                {{ member.firstname }} {{ member.lastname }}
+            </option>
+    </select>
+    <button type="submit">Valider l'emprunt</button>
+</form>
+
+</body>
+</html>
