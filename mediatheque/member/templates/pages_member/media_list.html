@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste de tous les médias</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Titre</th>
+        <th>Type</th>
+        <th>Disponible</th>
+    </tr>
+
+    {% for media in medias %}
+
+    <tr>
+        <td>{{ media.title }}</td>
+        <td>{{ media.media_type }}</td>
+        <td>{{ media.available|yesno:"Oui,Non" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td>Acun média disponible</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="{% url 'home' %}">⬅ Retour à l’accueil</a>
+
+
+</body>
+</html>
