@@ -29,7 +29,7 @@ def create_member(request):
     else:
         form = MemberForm()
 
-    return render(request, 'pages/create_member.html', {"form": form})
+    return render(request, 'pages/member_form.html', {"form": form})
 
 
 def edit_member(request, member_id):
@@ -41,8 +41,10 @@ def edit_member(request, member_id):
         member.email = request.POST["email"]
         member.save()
         return redirect("member_list")
+    else:
+        form = MemberForm(instance=member)
 
-    return render(request, "pages/edit_member.html", {"member": member})
+    return render(request, "pages/member_form.html", {"member": member, "form": form})
 
 
 def delete_member(request, member_id):
@@ -85,7 +87,7 @@ def edit_media(request, media_id):
     else:
         form = MediaForm(instance=media)
 
-    return render(request, "pages/edit_media.html", {"form": form, "media": media})
+    return render(request, "pages/media_form.html", {"form": form, "media": media})
 
 
 def delete_media(request, media_id):
@@ -118,6 +120,14 @@ def create_loan(request, media_id):
 
         if not media.available or media.consultation_only:
             messages.error(request, "Ce média ne peut pas être emprunté.")
+            return redirect("media_list")
+
+        if member.has_too_many_loans():
+            messages.error(request, "Ce membre a déjà 3 emprunts en cours.")
+            return redirect("media_list")
+
+        if member.has_late_loan():
+            messages.error(request, "Ce membre a un emprunt en retard.")
             return redirect("media_list")
 
         Loan.objects.create(
