@@ -23,4 +23,5 @@ urlpatterns = [
     path('', home, name='home'),
 
     path('bibliothecaire/', include('bibliothecaire.urls')),
+    path('member/', include('member.urls')),
 ]
