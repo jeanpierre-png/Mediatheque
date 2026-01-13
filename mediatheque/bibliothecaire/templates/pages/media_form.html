@@ -2,7 +2,15 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter un média</title>
+
+    <title>
+        {% if media %}
+            Modifier le média
+        {% else %}
+            Ajouter un média
+        {% endif %}
+    </title>
+
 </head>
 <body>
 
@@ -41,6 +49,36 @@
     <button type="submit">Ajouter</button>
 
 </form>
+
+<script>
+
+function updateFields() {
+    const type = document.getElementById("id_media_type").value;
+
+    document.getElementById("field-author").style.display = "none";
+    document.getElementById("field-artist").style.display = "none";
+    document.getElementById("field-realisator").style.display = "none";
+    document.getElementById("field-creator").style.display = "none";
+
+    if (type === "books") {
+        document.getElementById("field-author").style.display = "block";
+    }
+    if (type === "cds") {
+        document.getElementById("field-artist").style.display = "block";
+    }
+    if (type === "dvds") {
+        document.getElementById("field-realisator").style.display = "block";
+    }
+    if (type === "game") {
+        document.getElementById("field-creator").style.display = "block";
+    }
+}
+
+document.getElementById("id_media_type").addEventListener("change", updateFields);
+
+updateFields();
+
+</script>
 
 <br>
 

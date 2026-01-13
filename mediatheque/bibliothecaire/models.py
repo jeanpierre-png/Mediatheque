@@ -1,14 +1,30 @@
+from datetime import timedelta
 from django.db import models
 from django.utils import timezone
 
 
 class Member(models.Model):
+
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
+    joined_date = models.DateField(default=timezone.now)
+
+    def active_loans(self):
+        return self.loan_set.filter(return_date__isnull=True)
+    
+    def has_late_loan(self):
+        return any(loan.is_late() for loan in self.active_loans())
+    
+    def has_too_many_loans(self):
+        return self.active_loans().count() >= 3
+    
+    def __str__(self):
+        return f"{self.firstname} {self.lastname}"
 
 
 class Media(models.Model):
+
     TYPES_MEDIA =[
         ('books', 'Livre'),
         ('cds', 'CD'),
@@ -38,7 +54,20 @@ class Media(models.Model):
 
 
 class Loan(models.Model):
+
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     media = models.ForeignKey(Media, on_delete=models.CASCADE)
     loan_date = models.DateField(default=timezone.now)
     return_date = models.DateField(null=True, blank=True)
+    
+    def due_date(self):
+        return self.loan_date + timedelta(days=7)
+    
+    def is_late(self):
+        return self.return_date is None and timezone.now().date() > self.due_date()
+    
+    def is_return(self):
+        return self.return_date is not None
+    
+    def __str__(self):
+        return f"{self.member} → {self.media}"
