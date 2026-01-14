@@ -15,6 +15,7 @@
     {% for media in medias %}
         <li>
             <strong>{{ media.title }}</strong>
+            ({{ media.get_media_type_display }})
             -
             {% if media.available and not media.consultation_only %}
                 <a href="{% url 'create_loan' media.id %}">Emprunter</a>

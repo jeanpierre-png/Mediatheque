@@ -120,15 +120,28 @@ def create_loan(request, media_id):
 
         if not media.available or media.consultation_only:
             messages.error(request, "Ce média ne peut pas être emprunté.")
-            return redirect("media_list")
+            return render(request,"pages/create_loan.html", {"media": media, "members": members})
+
+        already_loaned = Loan.objects.filter(
+            member=member,
+            media=media,
+            return_date__isnull=True
+        ).exists()
+
+        if already_loaned:
+            messages.error(
+                request,
+                "Ce membre a déjà emprunté ce média."
+            )
+            return render(request, "pages/create_loan.html", {"media": media, "members": members})
 
         if member.has_too_many_loans():
             messages.error(request, "Ce membre a déjà 3 emprunts en cours.")
-            return redirect("media_list")
+            return render(request,"pages/create_loan.html", {"media": media, "members": members})
 
         if member.has_late_loan():
             messages.error(request, "Ce membre a un emprunt en retard.")
-            return redirect("media_list")
+            return render(request,"pages/create_loan.html", {"media": media, "members": members})
 
         Loan.objects.create(
             member=member,
@@ -140,21 +153,21 @@ def create_loan(request, media_id):
         media.save()
 
         messages.success(request, "Emprunt créé avec succès.")
-        return redirect("member_list")
+        return render(request,"pages/create_loan.html", {"media": media, "members": members})
 
     return render(request, "pages/create_loan.html", {"media": media, "members": members})
 
 
 def return_loan(request, loan_id):
-
     loan = get_object_or_404(Loan, id=loan_id)
-    loan.return_date = timezone.now()
+
+    loan.return_date = timezone.now().date()
     loan.save()
 
-    media = Loan.media
+    media = loan.media
     media.available = True
     media.save()
 
-    return redirect("media_list")
+    return redirect("loan_list")
 
 
