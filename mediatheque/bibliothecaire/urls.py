@@ -18,5 +18,5 @@ urlpatterns = [
     path("media/loan/<int:media_id>/", views.create_loan, name="create_loan" ),
 
     path("loans/", views.loan_list, name="loan_list" ),
-    path("loan/<int:loan_id>/return", views.return_loan, name="return_loan" ),
+    path("loan/<int:loan_id>/return/", views.return_loan, name="return_loan" ),
 ]

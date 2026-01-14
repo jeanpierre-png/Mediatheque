@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<h2>Emprunts en cours</h2>
+
 <table>
     <tr>
         <th>Média</th>
@@ -20,12 +22,20 @@
 
     <tr>
         <td>{{ loan.media.title }}</td>
-        <td>{{ loan.member.firstname }} {{ loan.member.lastname}}</td>
+        <td>{{ loan.member.firstname }} {{ loan.member.lastname }}</td>
         <td>{{ loan.loan_date }}</td>
         <td>{{ loan.due_date }}</td>
 
+        <td>
+            {% if loan.is_late %}
+                En retard
+            {% else %}
+                OK
+            {% endif %}
+        </td>
+
          <td>
-             <a href="">Rendre</a>
+             <a href="{% url 'return_loan' loan.id %}">Rendre</a>
          </td>
     </tr>
 
